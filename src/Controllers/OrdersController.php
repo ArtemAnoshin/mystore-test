@@ -16,4 +16,20 @@ class OrdersController extends Controller
             'data' => []
         ];
     }
+
+    public function getOrders()
+    {
+        $this->onlyWithToken();
+
+        $service_api = new MyStorageApiHandlerService();
+        $response = $service_api->getOrders();
+
+        if (is_array($response) && isset($response['error'])) {
+            throw new Exception($response['error']);
+        }
+
+        return [
+            'data' => $response
+        ];
+    }
 }

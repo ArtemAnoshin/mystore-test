@@ -11,7 +11,8 @@ class Routes
     private $routes = [
         'GET /' => [AuthController::class, 'index'],
         'POST /auth' => [AuthController::class, 'auth'],
-        'GET /orders' => [OrdersController::class, 'index']
+        'GET /orders' => [OrdersController::class, 'index'],
+        'POST /orders' => [OrdersController::class, 'getOrders']
     ];
 
     public function getController()

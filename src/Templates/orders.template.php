@@ -21,8 +21,54 @@
 
     <div class="container">
         <div class="row">
-            
+            <div id="root">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Идентификатор</th>
+                            <th>Время</th>
+                            <th>Контрагент</th>
+                            <th>Сумма</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <script>
+        (async () => {
+            const rawResponse = await fetch('/orders', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const response = await rawResponse.json();
+        let template = '';
+
+        if (response.rows) {
+            response.rows.forEach((element) => {
+                template += `
+                    <tr>
+                        <td>${element.name}</td>
+                        <td>${element.moment}</td>
+                        <td>${element.agent.name}</td>
+                        <td>${element.sum.toString().substring(0, element.sum.toString().length - 2) + '.' + element.sum.toString().slice(-2)}</td>
+                        <td>${element.state.name}</td>
+                    </tr>         
+                `;
+            })
+        }
+
+        document.getElementById('tbody').innerHTML = template;
+        })();
+    </script>
 </body>
 </html>
