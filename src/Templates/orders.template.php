@@ -70,9 +70,9 @@
             response.orders.forEach((element) => {
                 template += `
                     <tr>
-                        <td>${element.name}</td>
+                        <td><a href="${element.link}" target="blank">${element.name}</a></td>
                         <td>${element.moment}</td>
-                        <td>${element.agent_name}</td>
+                        <td><a href="${element.agent_href}" target="blank">${element.agent_name}</a></td>
                         <td>${element.sum.toString().substring(0, element.sum.toString().length - 2) + '.' + element.sum.toString().slice(-2)}</td>
                         <td>${statuses(allStatuses, element.state_id)}</td>
                     </tr>         

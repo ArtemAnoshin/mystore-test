@@ -44,6 +44,7 @@ class OrdersController extends Controller
                 'name' => $order['name'],
                 'moment' => $order['moment'],
                 'sum' => $order['sum'],
+                'link' => $order['meta']['uuidHref'],
                 'agent_id' => $order['agent']['id'],
                 'agent_href' => $order['agent']['meta']['uuidHref'],
                 'agent_name' => $order['agent']['name'],
