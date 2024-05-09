@@ -4,13 +4,14 @@ namespace Isibia\Mystore\Routes;
 
 use Exception;
 use Isibia\Mystore\Controllers\AuthController;
+use Isibia\Mystore\Controllers\OrdersController;
 
 class Routes
 {
     private $routes = [
         'GET /' => [AuthController::class, 'index'],
         'POST /auth' => [AuthController::class, 'auth'],
-        //'GET /orders' => [OrdersController::class, 'index']
+        'GET /orders' => [OrdersController::class, 'index']
     ];
 
     public function getController()

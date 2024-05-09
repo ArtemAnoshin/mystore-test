@@ -5,12 +5,12 @@ namespace Isibia\Mystore\Controllers;
 use Exception;
 use Isibia\Mystore\Services\MyStorageApiHandlerService;
 
-class AuthController extends Controller
+class OrdersController extends Controller
 {
     public function index()
     {
         return [
-            'template' => 'auth',
+            'template' => 'orders',
             'data' => []
         ];
     }

@@ -23,6 +23,13 @@ final class App
     {
         $template = $this->responseData()['template'] ?? null;
         $data = $this->responseData()['data'] ?? null;
+        $redirect = $this->responseData()['redirect'] ?? null;
+
+        // Redirect
+        if ($redirect) {
+            header("Location: $redirect");
+            exit();
+        }
 
         // JSON
         if (!$template) {
