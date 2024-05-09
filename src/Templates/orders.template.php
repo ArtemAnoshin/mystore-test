@@ -52,22 +52,44 @@
 
         const response = await rawResponse.json();
         let template = '';
+        const allStatuses = response.statuses;
+        const statuses = (statuses, currentStatusId) => {
+            let options = '';
+            options += `<select class="order-status-selector">`;
+            statuses.forEach((status) => {
+                const currentStatus = (status.id === currentStatusId) ? 'selected' : '';
+                options += `
+                    <option ${currentStatus} value="${status.id}">${status.name}</option>       
+                `;
+            });
+            options += `</select>`;
+            return options;
+        };
 
-        if (response.rows) {
-            response.rows.forEach((element) => {
+        if (response.orders) {
+            response.orders.forEach((element) => {
                 template += `
                     <tr>
                         <td>${element.name}</td>
                         <td>${element.moment}</td>
-                        <td>${element.agent.name}</td>
+                        <td>${element.agent_name}</td>
                         <td>${element.sum.toString().substring(0, element.sum.toString().length - 2) + '.' + element.sum.toString().slice(-2)}</td>
-                        <td>${element.state.name}</td>
+                        <td>${statuses(allStatuses, element.state_id)}</td>
                     </tr>         
                 `;
             })
         }
 
         document.getElementById('tbody').innerHTML = template;
+
+        // Change status
+        const orderStatuses = document.querySelectorAll('.order-status-selector');
+
+        for (let i = 0; i < orderStatuses.length; i++) {
+            orderStatuses[i].addEventListener('change', function() {
+                alert('changed');
+            });
+        }
         })();
     </script>
 </body>
