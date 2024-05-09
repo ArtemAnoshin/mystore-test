@@ -9,7 +9,7 @@ class Routes
 {
     private $routes = [
         'GET /' => [AuthController::class, 'index'],
-        'POST /get_token' => [AuthController::class, 'getToken'],
+        'POST /auth' => [AuthController::class, 'auth'],
         //'GET /orders' => [OrdersController::class, 'index']
     ];
 
@@ -23,12 +23,16 @@ class Routes
         $current_url = parse_url($protocol . '://' . $host . $request_uri);
         $route_match = $method . ' ' . $current_url['path'];
 
+        $route_exists = false;
         foreach ($this->routes as $route => $controller) {
             if ($route === $route_match) {
+                $route_exists = true;
                 return new $controller[0]($controller[1]);
             }
+        }
 
-            throw new Exception('Route not found');
+        if (!$route_exists) {
+            throw new Exception('Route not found.');
         }
     }
 }

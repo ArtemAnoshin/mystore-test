@@ -22,7 +22,7 @@ final class App
     public function response()
     {
         $template = $this->responseData()['template'] ?? null;
-        $data = $this->responseData()['data'];
+        $data = $this->responseData()['data'] ?? null;
 
         // JSON
         if (!$template) {
