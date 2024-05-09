@@ -15,4 +15,14 @@ abstract class Controller
     {
         return call_user_func(array($this, $this->action));
     }
+
+    public function onlyWithToken()
+    {
+        session_start();
+
+        if (empty($_SESSION['token'])) {
+            header("Location: /");
+            exit();
+        }
+    }
 }

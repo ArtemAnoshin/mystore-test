@@ -9,6 +9,15 @@ class AuthController extends Controller
 {
     public function index()
     {
+        session_start();
+
+        if (!empty($_SESSION['token'])) {
+            return [
+                'redirect' => '/orders',
+                'data' => []
+            ];
+        }
+
         return [
             'template' => 'auth',
             'data' => []
