@@ -18,9 +18,14 @@ class AuthController extends Controller
             ];
         }
 
+        $csrf = bin2hex(random_bytes(32));
+        $_SESSION["csrf"] = $csrf;
+
         return [
             'template' => 'auth',
-            'data' => []
+            'data' => [
+                'csrf' => $csrf,
+            ]
         ];
     }
 
@@ -33,6 +38,12 @@ class AuthController extends Controller
             throw new Exception('Invalid params');
         }
 
+        session_start();
+
+        if (!isset($_POST["csrf"]) || !isset($_SESSION["csrf"]) || $_POST["csrf"] !== $_SESSION["csrf"]) {
+            throw new Exception('CSRF protection is worked');
+        }
+
         // Make request to МойСклад
         $service = new MyStorageApiHandlerService();
         $response = $service->getToken($login, $password);
@@ -40,8 +51,6 @@ class AuthController extends Controller
         if (is_array($response) && isset($response['error'])) {
             throw new Exception($response['error']);
         }
-
-        session_start();
 
         $_SESSION['token'] = $response; 
 

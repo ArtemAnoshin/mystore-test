@@ -28,6 +28,7 @@
             align-items: center;
             justify-content: center;">
             <form method="post" action="/auth" style="max-width: 500px;">
+                <input type="hidden" name="csrf" value="<?php echo $data['csrf']; ?>">
                 <div class="mb-3">
                     <label for="login" class="form-label">Логин</label>
                     <input type="text" class="form-control" id="login" name="login" required>
