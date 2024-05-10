@@ -75,28 +75,32 @@ class OrdersController extends Controller
         $prepared_orders = [];
         $prepared_statuses = [];
 
-        foreach ($orders['rows'] as $order) {
-            $prepared_orders[] = [
-                'id' => $order['id'],
-                'name' => $order['name'],
-                'moment' => $order['moment'],
-                'sum' => $order['sum'],
-                'link' => $order['meta']['uuidHref'],
-                'agent_id' => $order['agent']['id'],
-                'agent_href' => $order['agent']['meta']['uuidHref'],
-                'agent_name' => $order['agent']['name'],
-                'state_id' => $order['state']['id'],
-                'state_name' => $order['state']['name'],
-                'state_color' => $order['state']['color'],
-            ];
+        if (!empty($orders['rows'])) {
+            foreach ($orders['rows'] as $order) {
+                $prepared_orders[] = [
+                    'id'          => isset($order['id']) ? htmlspecialchars($order['id']) : null,
+                    'name'        => isset($order['name']) ? htmlspecialchars($order['name']) : null,
+                    'moment'      => isset($order['moment']) ? htmlspecialchars($order['moment']) : null,
+                    'sum'         => isset($order['sum']) ? htmlspecialchars($order['sum']) : null,
+                    'link'        => isset($order['meta']['uuidHref']) ? htmlspecialchars($order['meta']['uuidHref']) : null,
+                    'agent_id'    => isset($order['agent']['id']) ? htmlspecialchars($order['agent']['id']) : null,
+                    'agent_href'  => isset($order['agent']['meta']['uuidHref']) ? htmlspecialchars($order['agent']['meta']['uuidHref']) : null,
+                    'agent_name'  => isset($order['agent']['name']) ? htmlspecialchars($order['agent']['name']) : null,
+                    'state_id'    => isset($order['state']['id']) ? htmlspecialchars($order['state']['id']) : null,
+                    'state_name'  => isset($order['state']['name']) ? htmlspecialchars($order['state']['name']) : null,
+                    'state_color' => isset($order['state']['color']) ? htmlspecialchars($order['state']['color']) : null,
+                ];
+            }
         }
 
-        foreach ($statuses['states'] as $status) {
-            $prepared_statuses[] = [
-                'id' => $status['id'],
-                'name' => $status['name'],
-                'color' => $status['color'],
-            ];
+        if (!empty($statuses['states'])) {
+            foreach ($statuses['states'] as $status) {
+                $prepared_statuses[] = [
+                    'id'    => isset($status['id']) ? htmlspecialchars($status['id']) : null,
+                    'name'  => isset($status['name']) ? htmlspecialchars($status['name']) : null,
+                    'color' => isset($status['color']) ? htmlspecialchars($status['color']) : null,
+                ];
+            }
         }
 
         return [

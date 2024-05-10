@@ -64,7 +64,7 @@
                 // Функция отрисовки селекта со статусами
                 const statuses = (statuses, currentStatusId, orderId) => {
                     let options = '';
-                    options += `<select class="order-status-selector">`;
+                    options += `<select class="order-status-selector ui-select">`;
                     statuses.forEach((status) => {
                         const currentStatus = (status.id === currentStatusId) ? 'selected' : '';
                         options += `
