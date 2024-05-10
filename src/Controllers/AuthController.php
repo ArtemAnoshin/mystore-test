@@ -11,15 +11,17 @@ class AuthController extends Controller
     {
         session_start();
 
+        $csrf = bin2hex(random_bytes(32));
+        $_SESSION["csrf"] = $csrf;
+
         if (!empty($_SESSION['token'])) {
             return [
                 'redirect' => '/orders',
-                'data' => []
+                'data' => [
+                    'csrf' => $csrf,
+                ]
             ];
         }
-
-        $csrf = bin2hex(random_bytes(32));
-        $_SESSION["csrf"] = $csrf;
 
         return [
             'template' => 'auth',
