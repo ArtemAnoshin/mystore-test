@@ -53,13 +53,13 @@
         const response = await rawResponse.json();
         let template = '';
         const allStatuses = response.statuses;
-        const statuses = (statuses, currentStatusId) => {
+        const statuses = (statuses, currentStatusId, orderId) => {
             let options = '';
             options += `<select class="order-status-selector">`;
             statuses.forEach((status) => {
                 const currentStatus = (status.id === currentStatusId) ? 'selected' : '';
                 options += `
-                    <option ${currentStatus} value="${status.id}">${status.name}</option>       
+                    <option ${currentStatus} value="${orderId + '|' + status.id}">${status.name}</option>
                 `;
             });
             options += `</select>`;
@@ -74,7 +74,7 @@
                         <td>${element.moment}</td>
                         <td><a href="${element.agent_href}" target="blank">${element.agent_name}</a></td>
                         <td>${element.sum.toString().substring(0, element.sum.toString().length - 2) + '.' + element.sum.toString().slice(-2)}</td>
-                        <td>${statuses(allStatuses, element.state_id)}</td>
+                        <td>${statuses(allStatuses, element.state_id, element.id)}</td>
                     </tr>         
                 `;
             })
@@ -87,7 +87,18 @@
 
         for (let i = 0; i < orderStatuses.length; i++) {
             orderStatuses[i].addEventListener('change', function() {
-                alert('changed');
+                const response = fetch('/changeStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: this.value
+                    })
+                });
+
+                console.log(response);
             });
         }
         })();

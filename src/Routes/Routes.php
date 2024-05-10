@@ -12,7 +12,8 @@ class Routes
         'GET /' => [AuthController::class, 'index'],
         'POST /auth' => [AuthController::class, 'auth'],
         'GET /orders' => [OrdersController::class, 'index'],
-        'POST /orders' => [OrdersController::class, 'getOrders']
+        'POST /orders' => [OrdersController::class, 'getOrders'],
+        'POST /changeStatus' => [OrdersController::class, 'changeStatus'],
     ];
 
     public function getController()

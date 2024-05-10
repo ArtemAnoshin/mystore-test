@@ -33,6 +33,29 @@ class OrdersController extends Controller
         return $this->buildResponseForOrders($orders, $statuses);
     }
 
+    public function changeStatus()
+    {
+        $this->onlyWithToken();
+
+        $body = json_decode(file_get_contents('php://input'), true);
+        $data = $body ? $body['data'] : null;
+
+        if (!$data) {
+            return [
+                'data' => []
+            ];
+        }
+
+        $service_api = new MyStorageApiHandlerService();
+        $result = $service_api->changeStatus($data);
+
+        if (is_array($result) && isset($result['error'])) {
+            throw new Exception($result['error']);
+        }
+
+        return [];
+    }
+
     private function buildResponseForOrders(array $orders, array $statuses): array
     {
         $prepared_orders = [];
