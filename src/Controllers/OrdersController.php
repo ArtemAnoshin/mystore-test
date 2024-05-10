@@ -7,6 +7,9 @@ use Isibia\Mystore\Services\MyStorageApiHandlerService;
 
 class OrdersController extends Controller
 {
+    /**
+     * Выводит страницу с заказами
+     */
     public function index()
     {
         $this->onlyWithToken();
@@ -17,6 +20,9 @@ class OrdersController extends Controller
         ];
     }
 
+    /**
+     * Вернет список всех заказов
+     */
     public function getOrders()
     {
         $this->onlyWithToken();
@@ -33,6 +39,9 @@ class OrdersController extends Controller
         return $this->buildResponseForOrders($orders, $statuses);
     }
 
+    /**
+     * Запрос на изменение статуса заказа
+     */
     public function changeStatus()
     {
         $this->onlyWithToken();
@@ -53,9 +62,14 @@ class OrdersController extends Controller
             throw new Exception($result['error']);
         }
 
-        return [];
+        return [
+            'data' => $result
+        ];
     }
 
+    /**
+     * Подготовка данных для вывода в шаблон при получении заказов
+     */
     private function buildResponseForOrders(array $orders, array $statuses): array
     {
         $prepared_orders = [];

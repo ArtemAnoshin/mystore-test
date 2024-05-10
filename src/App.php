@@ -2,7 +2,6 @@
 
 namespace Isibia\Mystore;
 
-use Exception;
 use Isibia\Mystore\Routes\Routes;
 
 final class App
